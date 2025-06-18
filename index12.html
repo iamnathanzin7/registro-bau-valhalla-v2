@@ -14,16 +14,13 @@
         }
 
         :root {
-            --primary: #1a2a3a;
-            --secondary: #2c3e50;
+            --primary: #0f1a2a;
+            --secondary: #1a2a3a;
             --accent: #d4a762;
-            --dark: #0f1923;
-            --light: #ecf0f1;
-            --success: #27ae60;
-            --warning: #e74c3c;
             --text: #333;
-            --bg: #1a2a3a;
-            --card-bg: #e6d5b8;
+            --light: #f8f4e8;
+            --bg: #0f1a2a;
+            --card-bg: #f8f4e8;
             --border: rgba(0,0,0,0.1);
         }
 
@@ -35,129 +32,22 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            background-image: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
         }
 
-        /* Menu Principal */
-        .main-menu {
-            width: 100%;
-            max-width: 900px;
-            background: var(--card-bg);
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
-            padding: 50px;
-            text-align: center;
-            border: 1px solid var(--border);
-        }
-
-        .brand {
-            margin-bottom: 40px;
-            position: relative;
-        }
-
-        .brand-title {
-            font-size: 3rem;
-            font-weight: 800;
-            color: var(--accent);
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 10px;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
-        }
-
-        .brand-subtitle {
-            font-size: 1.1rem;
-            color: var(--secondary);
-            letter-spacing: 8px;
-            margin-bottom: 30px;
-            text-transform: uppercase;
-            font-weight: 500;
-        }
-
-        .divider {
-            width: 80px;
-            height: 4px;
-            background: var(--accent);
-            margin: 0 auto 40px;
-            border-radius: 2px;
-        }
-
-        .menu-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 50px;
-        }
-
-        .menu-card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 35px 25px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 1px solid var(--border);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .menu-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: var(--accent);
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.3s ease;
-        }
-
-        .menu-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .menu-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .menu-card i {
-            font-size: 2.8rem;
-            color: var(--accent);
-            margin-bottom: 20px;
-            transition: all 0.3s ease;
-        }
-
-        .menu-card:hover i {
-            transform: scale(1.1);
-        }
-
-        .menu-card h3 {
-            font-size: 1.6rem;
-            margin-bottom: 15px;
-            color: var(--primary);
-            font-weight: 600;
-        }
-
-        .menu-card p {
-            opacity: 0.8;
-            font-size: 1rem;
-            color: var(--text);
-            line-height: 1.5;
-        }
-
-        /* Container Principal */
         .app-container {
             width: 100%;
             max-width: 900px;
             background: var(--card-bg);
-            border-radius: 12px;
+            border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
-            display: none;
-            border: 1px solid var(--border);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .app-header {
@@ -168,480 +58,302 @@
             border-bottom: 4px solid var(--accent);
         }
 
-        .app-header-title {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 10px;
-        }
-
-        .app-header-title i {
+        .app-title {
             font-size: 2.2rem;
-            color: var(--accent);
-        }
-
-        .app-header-title h1 {
-            font-size: 2rem;
             color: white;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 600;
+            letter-spacing: 2px;
+            font-weight: 700;
         }
 
         .app-subtitle {
             font-size: 1rem;
             opacity: 0.8;
             color: rgba(255, 255, 255, 0.8);
-            font-weight: 300;
+            margin-top: 5px;
         }
 
-        .back-button {
-            position: absolute;
-            left: 25px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.1);
+        .tab-container {
+            display: flex;
+            background: var(--primary);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .tab-button {
+            flex: 1;
+            padding: 15px;
+            background: none;
             border: none;
-            color: white;
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
+            color: rgba(255,255,255,0.7);
+            font-size: 1rem;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .back-button:hover {
-            background: var(--accent);
-            transform: translateY(-50%) scale(1.1);
-        }
-
-        /* Formulário */
-        .form-section {
-            padding: 35px;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 25px;
-            margin-bottom: 30px;
-        }
-
-        .input-field {
             position: relative;
         }
 
-        .input-field i {
+        .tab-button.active {
+            color: white;
+            background: rgba(255,255,255,0.1);
+        }
+
+        .tab-button.active::after {
+            content: '';
             position: absolute;
-            left: 18px;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--accent);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 30px;
+            animation: slideIn 0.4s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Formulários */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .input-group i {
+            position: absolute;
+            left: 15px;
             top: 50%;
             transform: translateY(-50%);
             color: var(--accent);
             z-index: 1;
-            font-size: 1.1rem;
         }
 
-        input, select {
+        input, select, textarea {
             width: 100%;
-            padding: 16px 20px 16px 50px;
+            padding: 15px 15px 15px 45px;
             border: 1px solid var(--border);
-            border-radius: 10px;
-            background: var(--card-bg);
+            border-radius: 8px;
+            background: white;
             color: var(--text);
             font-size: 1rem;
             transition: all 0.3s ease;
-            position: relative;
-            font-weight: 500;
+        }
+
+        textarea {
+            min-height: 120px;
+            padding: 15px;
         }
 
         select {
             appearance: none;
-            cursor: pointer;
         }
 
-        .select-wrapper {
+        .custom-select {
             position: relative;
         }
 
-        .select-wrapper::after {
+        .custom-select::after {
             content: '\f078';
             font-family: 'Font Awesome 6 Free';
             font-weight: 900;
             position: absolute;
-            right: 20px;
+            right: 15px;
             top: 50%;
             transform: translateY(-50%);
             color: var(--accent);
             pointer-events: none;
-            font-size: 0.9rem;
         }
 
-        input:focus, select:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(212, 167, 98, 0.2);
-        }
-
-        input::placeholder {
-            color: #aaa;
-            font-weight: 400;
-        }
-
-        .action-button {
+        .btn {
             background: var(--accent);
-            color: white;
+            color: var(--primary);
             border: none;
-            padding: 18px 25px;
-            border-radius: 10px;
+            padding: 16px;
+            border-radius: 8px;
             font-size: 1.1rem;
             font-weight: 600;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
+            gap: 10px;
             transition: all 0.3s ease;
-            box-shadow: 0 5px 20px rgba(212, 167, 98, 0.3);
             width: 100%;
-            text-transform: uppercase;
-            letter-spacing: 1px;
         }
 
-        .action-button:hover {
+        .btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(212, 167, 98, 0.4);
-            background: #c89550;
-        }
-
-        .action-button:active {
-            transform: translateY(0);
-        }
-
-        .secondary-button {
-            background: var(--card-bg);
-            color: var(--accent);
-            border: 2px solid var(--accent);
-            box-shadow: none;
-        }
-
-        .secondary-button:hover {
-            background: rgba(212, 167, 98, 0.1);
+            box-shadow: 0 5px 15px rgba(212, 167, 98, 0.4);
         }
 
         /* Registros */
-        .records-section {
-            padding: 0 35px 35px;
+        .records-container {
+            margin-top: 30px;
         }
 
         .records-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 25px;
-            padding-bottom: 20px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
             border-bottom: 1px solid var(--border);
         }
 
-        .records-header h2 {
-            font-size: 1.6rem;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: var(--primary);
-            font-weight: 600;
-        }
-
-        .records-count {
-            font-size: 1rem;
-            color: var(--text);
-            opacity: 0.8;
-            font-weight: 500;
-        }
-
         .records-list {
-            max-height: 450px;
+            max-height: 400px;
             overflow-y: auto;
-            padding-right: 15px;
+            padding-right: 10px;
         }
 
         .record-item {
-            background: var(--card-bg);
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
+            background: white;
+            border-radius: 8px;
+            padding: 18px;
+            margin-bottom: 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-left: 5px solid var(--accent);
+            border-left: 4px solid var(--accent);
             transition: all 0.3s ease;
-            animation: fadeIn 0.5s ease;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-            position: relative;
-            overflow: hidden;
+            animation: fadeInItem 0.5s ease;
         }
 
-        .record-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, rgba(212,167,98,0.05) 0%, rgba(212,167,98,0) 100%);
-            z-index: 0;
-        }
-
-        .record-item:hover {
-            transform: translateX(5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        @keyframes fadeIn {
+        @keyframes fadeInItem {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
+        .record-item:hover {
+            transform: translateX(5px);
+        }
+
         .record-content {
             flex: 1;
-            position: relative;
-            z-index: 1;
         }
 
         .record-header {
             display: flex;
             align-items: center;
-            gap: 15px;
-            margin-bottom: 8px;
+            gap: 10px;
+            margin-bottom: 5px;
         }
 
         .record-header strong {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: var(--primary);
-            font-weight: 600;
         }
 
-        .record-action {
-            width: 35px;
-            height: 35px;
+        .action-icon {
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: var(--success);
+            background: #27ae60;
             color: white;
-            flex-shrink: 0;
         }
 
-        .withdrawal .record-action {
-            background: var(--warning);
+        .withdrawal .action-icon {
+            background: #e74c3c;
         }
 
-        .item-details {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-top: 8px;
-        }
-
-        .item-details span {
-            background: rgba(212, 167, 98, 0.1);
-            padding: 6px 15px;
-            border-radius: 20px;
-            font-size: 0.95rem;
-            color: var(--text);
-            border: 1px solid rgba(212, 167, 98, 0.2);
-            font-weight: 500;
-        }
-
-        .record-time {
-            font-size: 0.9rem;
-            opacity: 0.7;
-            text-align: right;
-            min-width: 130px;
-            font-weight: 400;
-            position: relative;
-            z-index: 1;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 50px 20px;
-        }
-
-        .empty-state i {
-            font-size: 3.5rem;
-            margin-bottom: 20px;
-            color: var(--accent);
-            opacity: 0.3;
-        }
-
-        .empty-state h3 {
-            color: var(--primary);
-            margin-bottom: 15px;
-            font-size: 1.5rem;
-        }
-
-        .empty-state p {
-            opacity: 0.6;
-            font-size: 1rem;
-            max-width: 400px;
-            margin: 0 auto;
-        }
-
-        /* Filtros */
-        .filters-container {
-            margin-bottom: 25px;
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-
-        .filter-button {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            color: var(--text);
-            padding: 10px 20px;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.95rem;
-            font-weight: 500;
+        .item-info {
             display: flex;
             align-items: center;
             gap: 8px;
+            margin-top: 5px;
         }
 
-        .filter-button:hover {
-            border-color: var(--accent);
-            color: var(--accent);
+        .item-info span {
+            background: rgba(212, 167, 98, 0.1);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: var(--text);
+            border: 1px solid rgba(212, 167, 98, 0.2);
         }
 
-        .filter-button.active {
-            background: var(--accent);
-            color: white;
-            border-color: var(--accent);
-            font-weight: 600;
+        .record-time {
+            font-size: 0.85rem;
+            opacity: 0.7;
+            text-align: right;
+            min-width: 120px;
         }
 
-        /* Toast */
-        .toast-message {
-            position: fixed;
-            top: 25px;
-            right: 25px;
-            background: var(--success);
-            color: white;
-            padding: 18px 28px;
-            border-radius: 10px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-            transform: translateX(150%);
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            z-index: 1000;
+        /* Relatórios */
+        .report-item {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--accent);
+            animation: fadeInItem 0.5s ease;
+        }
+
+        .report-header {
             display: flex;
-            align-items: center;
-            gap: 15px;
-            font-weight: 500;
-            max-width: 350px;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
         }
 
-        .toast-message.visible {
-            transform: translateX(0);
+        .report-author {
+            font-weight: 600;
+            color: var(--primary);
         }
 
-        .toast-message.error {
-            background: var(--warning);
+        .report-date {
+            font-size: 0.85rem;
+            opacity: 0.7;
         }
 
-        /* Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
+        .report-content {
+            line-height: 1.6;
         }
 
-        ::-webkit-scrollbar-track {
-            background: rgba(0,0,0,0.05);
-            border-radius: 10px;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: rgba(0,0,0,0.2);
-            border-radius: 10px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: rgba(0,0,0,0.3);
-        }
-
-        /* Responsividade */
+        /* Responsivo */
         @media (max-width: 768px) {
-            .main-menu, .app-container {
-                padding: 30px;
-            }
-            
-            .form-row {
+            .form-grid {
                 grid-template-columns: 1fr;
             }
             
             .record-item {
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 15px;
+                gap: 10px;
             }
             
             .record-time {
                 text-align: left;
                 width: 100%;
-                padding-top: 15px;
+                padding-top: 10px;
                 border-top: 1px solid var(--border);
             }
-
-            .menu-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .brand-title {
-                font-size: 2.2rem;
-            }
-
-            .brand-subtitle {
-                font-size: 1rem;
-                letter-spacing: 5px;
-            }
-
-            .app-header-title h1 {
-                font-size: 1.5rem;
-            }
-
-            .back-button {
-                width: 40px;
-                height: 40px;
-                left: 15px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .main-menu, .app-container {
-                padding: 25px 20px;
+            
+            .app-header {
+                padding: 20px 15px;
             }
             
-            .brand-title {
-                font-size: 2rem;
-            }
-            
-            .brand-subtitle {
-                letter-spacing: 3px;
-            }
-            
-            .filters-container {
-                justify-content: center;
-            }
-            
-            .records-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
+            .app-title {
+                font-size: 1.8rem;
             }
         }
     </style>
@@ -650,47 +362,27 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
 </head>
 <body>
-    <!-- Menu Principal -->
-    <div class="main-menu" id="mainMenu">
-        <div class="brand">
-            <div class="brand-title">VALHALLA</div>
-            <div class="brand-subtitle">CORPORATION</div>
-            <div class="divider"></div>
-        </div>
-        
-        <div class="menu-grid">
-            <div class="menu-card" onclick="showSection('chest-register')">
-                <i class="fas fa-archive"></i>
-                <h3>Registro do Baú</h3>
-                <p>Controle completo de entrada e saída de itens do baú da corporação</p>
-            </div>
-            
-            <div class="menu-card" onclick="showSection('location')">
-                <i class="fas fa-map-marked-alt"></i>
-                <h3>Localização</h3>
-                <p>Mapa estratégico e informações de localização importantes</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Seção do Registro do Baú -->
-    <div class="app-container" id="chest-register">
+    <div class="app-container">
         <header class="app-header">
-            <button class="back-button" onclick="backToMenu()">
-                <i class="fas fa-arrow-left"></i>
-            </button>
-            <div class="app-header-title">
-                <i class="fas fa-archive"></i>
-                <h1>Registro do Baú</h1>
-            </div>
-            <div class="app-subtitle">Valhalla Corporation</div>
+            <div class="app-title">VALHALLA CORPORATION</div>
+            <div class="app-subtitle">Sistema de Gestão</div>
         </header>
         
-        <div class="form-section">
-            <div class="form-row">
-                <div class="input-field select-wrapper">
+        <div class="tab-container">
+            <button class="tab-button active" onclick="openTab('bau')">
+                <i class="fas fa-archive"></i> Controle do Baú
+            </button>
+            <button class="tab-button" onclick="openTab('relatorios')">
+                <i class="fas fa-file-alt"></i> Relatórios
+            </button>
+        </div>
+        
+        <!-- Aba do Baú -->
+        <div id="bau" class="tab-content active">
+            <div class="form-grid">
+                <div class="input-group custom-select">
                     <i class="fas fa-user"></i>
-                    <select id="userName" required>
+                    <select id="nome" required>
                         <option value="" disabled selected>Selecione seu nome</option>
                         <option value="ALBERTO">ALBERTO</option>
                         <option value="JURANDIR">JURANDIR</option>
@@ -702,88 +394,69 @@
                     </select>
                 </div>
                 
-                <div class="input-field select-wrapper">
+                <div class="input-group custom-select">
                     <i class="fas fa-exchange-alt"></i>
-                    <select id="actionType" required>
-                        <option value="" disabled selected>Selecione a ação</option>
-                        <option value="colocou">Colocar no baú</option>
-                        <option value="retirou">Retirar do baú</option>
+                    <select id="tipo" required>
+                        <option value="" disabled selected>Tipo de Movimento</option>
+                        <option value="colocou">Depositou no baú</option>
+                        <option value="retirou">Retirou do baú</option>
                     </select>
                 </div>
                 
-                <div class="input-field">
+                <div class="input-group">
                     <i class="fas fa-box"></i>
-                    <input type="text" id="itemName" placeholder="Item (ex: MTAR, Colete)" required>
+                    <input type="text" id="item" placeholder="Item (ex: MTAR, Colete)" required>
                 </div>
                 
-                <div class="input-field">
+                <div class="input-group">
                     <i class="fas fa-hashtag"></i>
-                    <input type="number" id="itemQuantity" placeholder="Quantidade" min="1" required>
+                    <input type="number" id="quantidade" placeholder="Quantidade" min="1" required>
                 </div>
             </div>
             
-            <button class="action-button" onclick="registerAction()">
-                <i class="fas fa-plus-circle"></i> Registrar Ação
+            <button class="btn" onclick="registrarMovimento()">
+                <i class="fas fa-save"></i> Registrar Movimento
             </button>
-        </div>
-        
-        <div class="records-section">
-            <div class="records-header">
-                <h2><i class="fas fa-history"></i> Histórico de Movimentações</h2>
-                <div class="records-count" id="recordsCount">0 registros</div>
-            </div>
-
-            <div class="filters-container">
-                <button class="filter-button active" onclick="filterRecords('all')">
-                    <i class="fas fa-list"></i> Todos
-                </button>
-                <button class="filter-button" onclick="filterRecords('colocou')">
-                    <i class="fas fa-plus"></i> Adições
-                </button>
-                <button class="filter-button" onclick="filterRecords('retirou')">
-                    <i class="fas fa-minus"></i> Retiradas
-                </button>
-            </div>
             
-            <div class="records-list" id="recordsList">
-                <div class="empty-state">
-                    <i class="fas fa-box-open"></i>
-                    <h3>Nenhum registro encontrado</h3>
-                    <p>Registre a primeira movimentação do baú da corporação</p>
+            <div class="records-container">
+                <div class="records-header">
+                    <h3><i class="fas fa-history"></i> Histórico Recente</h3>
+                    <div class="filters">
+                        <button class="filter-btn active" onclick="filtrarRegistros('todos')">Todos</button>
+                        <button class="filter-btn" onclick="filtrarRegistros('colocou')">Depósitos</button>
+                        <button class="filter-btn" onclick="filtrarRegistros('retirou')">Retiradas</button>
+                    </div>
+                </div>
+                
+                <div class="records-list" id="listaRegistros">
+                    <!-- Registros serão carregados aqui -->
                 </div>
             </div>
         </div>
-    </div>
-
-    <!-- Seção de Localização -->
-    <div class="app-container" id="location">
-        <header class="app-header">
-            <button class="back-button" onclick="backToMenu()">
-                <i class="fas fa-arrow-left"></i>
-            </button>
-            <div class="app-header-title">
-                <i class="fas fa-map-marked-alt"></i>
-                <h1>Localização</h1>
-            </div>
-            <div class="app-subtitle">Valhalla Corporation</div>
-        </header>
         
-        <div class="form-section">
-            <div class="empty-state">
-                <i class="fas fa-map-marked-alt"></i>
-                <h3>Mapa Estratégico</h3>
-                <p>Esta seção está em desenvolvimento e será disponibilizada em breve</p>
-                <button class="action-button secondary-button" onclick="backToMenu()" style="margin-top: 30px;">
-                    <i class="fas fa-arrow-left"></i> Voltar ao Menu
-                </button>
+        <!-- Aba de Relatórios -->
+        <div id="relatorios" class="tab-content">
+            <div class="input-group">
+                <i class="fas fa-user"></i>
+                <input type="text" id="autorRelatorio" placeholder="Seu nome" required>
+            </div>
+            
+            <div class="input-group">
+                <textarea id="conteudoRelatorio" placeholder="Digite seu relatório (ex: Lavei $1.200.000 para a facção...)" required></textarea>
+            </div>
+            
+            <button class="btn" onclick="enviarRelatorio()">
+                <i class="fas fa-paper-plane"></i> Publicar Relatório
+            </button>
+            
+            <div class="records-container" style="margin-top: 30px;">
+                <h3><i class="fas fa-file-alt"></i> Relatórios Recentes</h3>
+                
+                <div class="records-list" id="listaRelatorios">
+                    <!-- Relatórios serão carregados aqui -->
+                </div>
             </div>
         </div>
-    </div>
-
-    <!-- Toast Notification -->
-    <div class="toast-message" id="toast">
-        <i class="fas fa-check-circle"></i>
-        <span id="toastMessage">Registro adicionado com sucesso!</span>
     </div>
 
     <script>
@@ -801,201 +474,237 @@
         // Inicializar Firebase
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
-        const recordsRef = database.ref("registros-bau");
+        const registrosRef = database.ref("registros-bau");
+        const relatoriosRef = database.ref("relatorios");
         
         // Variáveis globais
-        let allRecords = [];
-        let currentFilter = 'all';
+        let filtroAtual = 'todos';
+        let registrosCarregados = false;
+        let relatoriosCarregados = false;
 
-        // Mostrar seção específica
-        function showSection(sectionId) {
-            document.getElementById('mainMenu').style.display = 'none';
-            document.getElementById(sectionId).style.display = 'block';
+        // Abas
+        function openTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
             
-            if (sectionId === 'chest-register') {
-                loadRecords();
+            document.getElementById(tabId).classList.add('active');
+            document.querySelector(`.tab-button[onclick="openTab('${tabId}')"]`).classList.add('active');
+            
+            // Carrega os dados quando a aba é aberta
+            if (tabId === 'bau' && !registrosCarregados) {
+                carregarRegistros();
+                registrosCarregados = true;
+            } else if (tabId === 'relatorios' && !relatoriosCarregados) {
+                carregarRelatorios();
+                relatoriosCarregados = true;
             }
         }
 
-        // Voltar para o menu principal
-        function backToMenu() {
-            document.querySelectorAll('.app-container').forEach(sec => {
-                sec.style.display = 'none';
-            });
-            document.getElementById('mainMenu').style.display = 'block';
-        }
-
-        // Carregar registros do Firebase
-        function loadRecords() {
-            recordsRef.orderByChild("timestamp").on("value", (snapshot) => {
-                const data = snapshot.val();
+        // Carregar registros do baú
+        function carregarRegistros() {
+            registrosRef.orderByChild("timestamp").on("value", (snapshot) => {
+                const dados = snapshot.val();
+                const lista = document.getElementById("listaRegistros");
                 
-                if (!data) {
-                    allRecords = [];
-                    updateRecordsList();
+                if (!dados) {
+                    lista.innerHTML = '<div class="empty-message">Nenhum registro encontrado</div>';
                     return;
                 }
                 
-                allRecords = Object.entries(data)
+                const registros = Object.entries(dados)
                     .map(([key, value]) => ({ key, ...value }))
                     .sort((a, b) => b.timestamp - a.timestamp);
                 
-                updateRecordsList();
+                atualizarListaRegistros(registros);
             });
         }
 
-        // Mostrar notificação toast
-        function showToast(message, isError = false) {
-            const toast = document.getElementById("toast");
-            const toastMessage = document.getElementById("toastMessage");
+        // Registrar movimento no baú
+        function registrarMovimento() {
+            const nome = document.getElementById("nome").value;
+            const tipo = document.getElementById("tipo").value;
+            const item = document.getElementById("item").value.trim();
+            const quantidade = document.getElementById("quantidade").value;
             
-            toastMessage.textContent = message;
-            toast.className = isError ? 'toast-message error visible' : 'toast-message visible';
-            
-            setTimeout(() => {
-                toast.className = 'toast-message';
-            }, 3500);
-        }
-
-        // Registrar nova ação
-        function registerAction() {
-            const userName = document.getElementById("userName").value;
-            const actionType = document.getElementById("actionType").value;
-            const itemName = document.getElementById("itemName").value.trim();
-            const itemQuantity = document.getElementById("itemQuantity").value;
-            
-            if (!userName || !actionType || !itemName || !itemQuantity) {
-                showToast("Por favor, preencha todos os campos!", true);
+            if (!nome || !tipo || !item || !quantidade) {
+                mostrarNotificacao("Preencha todos os campos!", true);
                 return;
             }
             
-            const record = {
-                nome: userName,
-                tipo: actionType,
-                item: itemName,
-                quantidade: itemQuantity,
-                data: new Date().toLocaleString('pt-BR', {
-                    day: '2-digit',
-                    month: '2-digit',
-                    year: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit'
-                }),
+            const registro = {
+                nome,
+                tipo,
+                item,
+                quantidade,
+                data: new Date().toLocaleString('pt-BR'),
                 timestamp: firebase.database.ServerValue.TIMESTAMP
             };
             
-            const button = document.querySelector('.action-button');
-            button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processando...';
-            button.style.pointerEvents = 'none';
-            
-            recordsRef.push(record)
+            registrosRef.push(registro)
                 .then(() => {
-                    // Feedback visual
-                    button.innerHTML = '<i class="fas fa-check"></i> Registrado!';
-                    button.style.background = 'var(--success)';
-                    
-                    // Limpar campos
-                    document.getElementById("itemName").value = "";
-                    document.getElementById("itemQuantity").value = "";
-                    
-                    // Mostrar toast
-                    showToast("Movimentação registrada com sucesso!");
-                    
-                    setTimeout(() => {
-                        button.innerHTML = '<i class="fas fa-plus-circle"></i> Registrar Ação';
-                        button.style.background = 'var(--accent)';
-                        button.style.pointerEvents = 'auto';
-                    }, 2000);
+                    document.getElementById("item").value = "";
+                    document.getElementById("quantidade").value = "";
+                    mostrarNotificacao("Movimento registrado com sucesso!");
                 })
                 .catch(error => {
-                    console.error("Erro ao salvar:", error);
-                    showToast("Erro ao registrar! Tente novamente.", true);
-                    button.innerHTML = '<i class="fas fa-plus-circle"></i> Registrar Ação';
-                    button.style.background = 'var(--accent)';
-                    button.style.pointerEvents = 'auto';
+                    console.error("Erro:", error);
+                    mostrarNotificacao("Erro ao registrar!", true);
                 });
         }
 
         // Filtrar registros
-        function filterRecords(type) {
-            currentFilter = type;
-            
-            // Atualizar botões ativos
-            document.querySelectorAll('.filter-button').forEach(btn => {
+        function filtrarRegistros(tipo) {
+            filtroAtual = tipo;
+            document.querySelectorAll('.filter-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
+            document.querySelector(`.filter-btn[onclick="filtrarRegistros('${tipo}')"]`).classList.add('active');
             
-            document.querySelector(`.filter-button[onclick="filterRecords('${type}')"]`).classList.add('active');
-            
-            updateRecordsList();
+            registrosRef.once("value", (snapshot) => {
+                const dados = snapshot.val();
+                if (!dados) return;
+                
+                let registros = Object.entries(dados)
+                    .map(([key, value]) => ({ key, ...value }))
+                    .sort((a, b) => b.timestamp - a.timestamp);
+                
+                if (tipo !== 'todos') {
+                    registros = registros.filter(reg => reg.tipo === tipo);
+                }
+                
+                atualizarListaRegistros(registros);
+            });
         }
 
         // Atualizar lista de registros
-        function updateRecordsList() {
-            const recordsList = document.getElementById("recordsList");
+        function atualizarListaRegistros(registros) {
+            const lista = document.getElementById("listaRegistros");
             
-            if (allRecords.length === 0) {
-                recordsList.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-box-open"></i>
-                        <h3>Nenhum registro encontrado</h3>
-                        <p>Registre a primeira movimentação do baú da corporação</p>
-                    </div>
-                `;
-                document.getElementById("recordsCount").textContent = "0 registros";
+            if (registros.length === 0) {
+                lista.innerHTML = '<div class="empty-message">Nenhum registro encontrado</div>';
                 return;
             }
             
-            // Filtrar registros
-            let filteredRecords = allRecords;
-            if (currentFilter === 'colocou') {
-                filteredRecords = allRecords.filter(reg => reg.tipo === 'colocou');
-            } else if (currentFilter === 'retirou') {
-                filteredRecords = allRecords.filter(reg => reg.tipo === 'retirou');
-            }
-            
-            // Atualizar contador
-            document.getElementById("recordsCount").textContent = 
-                `${filteredRecords.length} ${filteredRecords.length === 1 ? 'registro' : 'registros'}`;
-            
-            // Limpar lista
-            recordsList.innerHTML = "";
-            
-            // Adicionar registros
-            filteredRecords.forEach(reg => {
-                const recordElement = document.createElement('div');
-                recordElement.className = `record-item ${reg.tipo === 'retirou' ? 'withdrawal' : ''}`;
-                recordElement.innerHTML = `
+            lista.innerHTML = registros.map(reg => `
+                <div class="record-item ${reg.tipo === 'retirou' ? 'withdrawal' : ''}">
                     <div class="record-content">
                         <div class="record-header">
-                            <div class="record-action">
+                            <div class="action-icon">
                                 <i class="fas ${reg.tipo === 'colocou' ? 'fa-plus' : 'fa-minus'}"></i>
                             </div>
                             <strong>${reg.nome}</strong>
                         </div>
-                        <div class="item-details">
+                        <div class="item-info">
                             <span>${reg.quantidade}x ${reg.item}</span>
                         </div>
                     </div>
                     <div class="record-time">
                         ${reg.data}
                     </div>
-                `;
-                recordsList.appendChild(recordElement);
+                </div>
+            `).join('');
+        }
+
+        // Carregar relatórios
+        function carregarRelatorios() {
+            relatoriosRef.orderByChild("timestamp").on("value", (snapshot) => {
+                const dados = snapshot.val();
+                const lista = document.getElementById("listaRelatorios");
+                
+                if (!dados) {
+                    lista.innerHTML = '<div class="empty-message">Nenhum relatório encontrado</div>';
+                    return;
+                }
+                
+                const relatorios = Object.entries(dados)
+                    .map(([key, value]) => ({ key, ...value }))
+                    .sort((a, b) => b.timestamp - a.timestamp);
+                
+                atualizarListaRelatorios(relatorios);
             });
         }
 
-        // Permitir enviar com Enter
-        document.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                registerAction();
+        // Enviar relatório
+        function enviarRelatorio() {
+            const autor = document.getElementById("autorRelatorio").value.trim();
+            const conteudo = document.getElementById("conteudoRelatorio").value.trim();
+            
+            if (!autor || !conteudo) {
+                mostrarNotificacao("Preencha todos os campos!", true);
+                return;
             }
-        });
+            
+            const relatorio = {
+                autor,
+                conteudo,
+                data: new Date().toLocaleString('pt-BR'),
+                timestamp: firebase.database.ServerValue.TIMESTAMP
+            };
+            
+            relatoriosRef.push(relatorio)
+                .then(() => {
+                    document.getElementById("conteudoRelatorio").value = "";
+                    mostrarNotificacao("Relatório publicado com sucesso!");
+                })
+                .catch(error => {
+                    console.error("Erro:", error);
+                    mostrarNotificacao("Erro ao publicar relatório!", true);
+                });
+        }
 
-        // Inicializar
-        document.addEventListener('DOMContentLoaded', function() {
-            // Focar no primeiro campo ao abrir o registro
-            document.getElementById('userName').focus();
+        // Atualizar lista de relatórios
+        function atualizarListaRelatorios(relatorios) {
+            const lista = document.getElementById("listaRelatorios");
+            
+            if (relatorios.length === 0) {
+                lista.innerHTML = '<div class="empty-message">Nenhum relatório encontrado</div>';
+                return;
+            }
+            
+            lista.innerHTML = relatorios.map(rel => `
+                <div class="report-item">
+                    <div class="report-header">
+                        <span class="report-author">${rel.autor}</span>
+                        <span class="report-date">${rel.data}</span>
+                    </div>
+                    <div class="report-content">
+                        ${rel.conteudo.replace(/\n/g, '<br>')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Notificação
+        function mostrarNotificacao(mensagem, isError = false) {
+            const notificacao = document.createElement('div');
+            notificacao.className = `notificacao ${isError ? 'error' : ''}`;
+            notificacao.innerHTML = `
+                <i class="fas ${isError ? 'fa-exclamation-circle' : 'fa-check-circle'}"></i>
+                <span>${mensagem}</span>
+            `;
+            
+            document.body.appendChild(notificacao);
+            
+            setTimeout(() => {
+                notificacao.classList.add('show');
+            }, 10);
+            
+            setTimeout(() => {
+                notificacao.classList.remove('show');
+                setTimeout(() => {
+                    notificacao.remove();
+                }, 300);
+            }, 3000);
+        }
+
+        // Carregar aba inicial
+        document.addEventListener('DOMContentLoaded', () => {
+            carregarRegistros();
+            registrosCarregados = true;
         });
     </script>
 </body>
