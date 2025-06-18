@@ -325,6 +325,88 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+
+        /* Estilos para o filtro */
+        .filtro-container {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filtro-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--light);
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .filtro-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .filtro-btn.ativo {
+            background: var(--accent);
+            color: var(--dark);
+            font-weight: 600;
+        }
+
+        /* Estilo para o dropdown de itens */
+        .datalist-input {
+            position: relative;
+        }
+
+        .datalist-suggestions {
+            position: absolute;
+            width: 100%;
+            max-height: 200px;
+            overflow-y: auto;
+            background: var(--dark);
+            border-radius: 0 0 8px 8px;
+            z-index: 100;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            display: none;
+        }
+
+        .datalist-suggestions div {
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .datalist-suggestions div:hover {
+            background: rgba(26, 188, 156, 0.3);
+        }
+
+        /* Estilo para feedback visual */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--success);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transform: translateX(150%);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toast.visible {
+            transform: translateX(0);
+        }
+
+        .toast.error {
+            background: var(--warning);
+        }
     </style>
     <!-- Firebase SDK (versão compatível) -->
     <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
@@ -358,9 +440,10 @@
                     </select>
                 </div>
                 
-                <div class="input-group">
+                <div class="input-group datalist-input">
                     <i class="fas fa-box"></i>
-                    <input type="text" id="item" placeholder="Item (ex: MTAR, Colete)" required>
+                    <input type="text" id="item" placeholder="Item (ex: MTAR, Colete)" list="itens-sugeridos" required>
+                    <div class="datalist-suggestions" id="suggestions"></div>
                 </div>
                 
                 <div class="input-group">
@@ -379,6 +462,16 @@
                 <h2><i class="fas fa-history"></i> Histórico de Movimentações</h2>
                 <div class="total-registros" id="totalRegistros">0 registros</div>
             </div>
+
+            <div class="filtro-container">
+                <button class="filtro-btn ativo" onclick="filtrarRegistros('todos')">Todos</button>
+                <button class="filtro-btn" onclick="filtrarRegistros('colocou')">
+                    <i class="fas fa-plus"></i> Adições
+                </button>
+                <button class="filtro-btn" onclick="filtrarRegistros('retirou')">
+                    <i class="fas fa-minus"></i> Retiradas
+                </button>
+            </div>
             
             <div class="registros-list" id="listaRegistros">
                 <div class="loading">
@@ -386,6 +479,11 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="toast" id="toast">
+        <i class="fas fa-check"></i>
+        <span>Registro adicionado com sucesso!</span>
     </div>
 
     <script>
@@ -405,16 +503,49 @@
         const database = firebase.database();
         const registrosRef = database.ref("registros-bau");
         
+        // Variáveis globais
+        let todosRegistros = [];
+        let itensUnicos = new Set();
+        let filtroAtual = 'todos';
+
+        // Elementos DOM
+        const nomeInput = document.getElementById("nome");
+        const tipoInput = document.getElementById("tipo");
+        const itemInput = document.getElementById("item");
+        const quantidadeInput = document.getElementById("quantidade");
+        const suggestionsContainer = document.getElementById("suggestions");
+        const toast = document.getElementById("toast");
+
+        // Carregar nome do localStorage se existir
+        if (localStorage.getItem('ultimoNome')) {
+            nomeInput.value = localStorage.getItem('ultimoNome');
+        }
+
+        // Mostrar toast de feedback
+        function mostrarToast(mensagem, isError = false) {
+            const toast = document.getElementById("toast");
+            toast.querySelector('span').textContent = mensagem;
+            toast.className = isError ? 'toast error visible' : 'toast visible';
+            
+            setTimeout(() => {
+                toast.className = 'toast';
+            }, 3000);
+        }
+
+        // Registrar nova movimentação
         function registrar() {
-            const nome = document.getElementById("nome").value.trim();
-            const tipo = document.getElementById("tipo").value;
-            const item = document.getElementById("item").value.trim();
-            const quantidade = document.getElementById("quantidade").value;
+            const nome = nomeInput.value.trim();
+            const tipo = tipoInput.value;
+            const item = itemInput.value.trim();
+            const quantidade = quantidadeInput.value;
             
             if (!nome || !tipo || !item || !quantidade) {
-                alert("Por favor, preencha todos os campos!");
+                mostrarToast("Por favor, preencha todos os campos!", true);
                 return;
             }
+            
+            // Salvar nome no localStorage para próxima vez
+            localStorage.setItem('ultimoNome', nome);
             
             const registro = {
                 nome,
@@ -432,10 +563,12 @@
                     btn.innerHTML = '<i class="fas fa-check"></i> Registrado!';
                     btn.style.background = 'linear-gradient(to right, #2ecc71, #27ae60)';
                     
-                    // Limpar campos
-                    document.getElementById("item").value = "";
-                    document.getElementById("quantidade").value = "";
-                    document.getElementById("tipo").selectedIndex = 0;
+                    // Limpar campos (exceto nome e tipo)
+                    itemInput.value = "";
+                    quantidadeInput.value = "";
+                    
+                    // Mostrar toast
+                    mostrarToast("Movimentação registrada com sucesso!");
                     
                     setTimeout(() => {
                         btn.innerHTML = '<i class="fas fa-plus-circle"></i> Registrar Ação';
@@ -444,17 +577,30 @@
                 })
                 .catch(error => {
                     console.error("Erro ao salvar:", error);
-                    alert("Erro ao registrar! Tente novamente.");
+                    mostrarToast("Erro ao registrar! Tente novamente.", true);
                 });
         }
-        
-        // Carregar e monitorar registros
-        registrosRef.orderByChild("timestamp").on("value", (snapshot) => {
-            const lista = document.getElementById("listaRegistros");
-            lista.innerHTML = "";
+
+        // Filtrar registros
+        function filtrarRegistros(tipo) {
+            filtroAtual = tipo;
             
-            const dados = snapshot.val();
-            if (!dados) {
+            // Atualizar botões ativos
+            document.querySelectorAll('.filtro-btn').forEach(btn => {
+                btn.classList.remove('ativo');
+            });
+            
+            document.querySelector(`.filtro-btn[onclick="filtrarRegistros('${tipo}')"]`).classList.add('ativo');
+            
+            // Aplicar filtro
+            atualizarListaRegistros();
+        }
+
+        // Atualizar lista de registros com filtro
+        function atualizarListaRegistros() {
+            const lista = document.getElementById("listaRegistros");
+            
+            if (todosRegistros.length === 0) {
                 lista.innerHTML = `
                     <div class="empty-message">
                         <i class="fas fa-box-open"></i>
@@ -466,17 +612,23 @@
                 return;
             }
             
-            // Converter para array e ordenar
-            const registros = Object.entries(dados)
-                .map(([key, value]) => ({ key, ...value }))
-                .sort((a, b) => b.timestamp - a.timestamp);
+            // Filtrar registros conforme seleção
+            let registrosFiltrados = todosRegistros;
+            if (filtroAtual === 'colocou') {
+                registrosFiltrados = todosRegistros.filter(reg => reg.tipo === 'colocou');
+            } else if (filtroAtual === 'retirou') {
+                registrosFiltrados = todosRegistros.filter(reg => reg.tipo === 'retirou');
+            }
             
             // Atualizar contador
             document.getElementById("totalRegistros").textContent = 
-                `${registros.length} ${registros.length === 1 ? 'registro' : 'registros'}`;
+                `${registrosFiltrados.length} ${registrosFiltrados.length === 1 ? 'registro' : 'registros'}`;
             
-            // Adicionar registros
-            registros.forEach(reg => {
+            // Limpar lista
+            lista.innerHTML = "";
+            
+            // Adicionar registros filtrados
+            registrosFiltrados.forEach(reg => {
                 const div = document.createElement('div');
                 div.className = `registro ${reg.tipo === 'retirou' ? 'retirou' : ''}`;
                 div.innerHTML = `
@@ -497,6 +649,77 @@
                 `;
                 lista.appendChild(div);
             });
+        }
+
+        // Carregar e monitorar registros
+        registrosRef.orderByChild("timestamp").on("value", (snapshot) => {
+            const dados = snapshot.val();
+            
+            if (!dados) {
+                todosRegistros = [];
+                atualizarListaRegistros();
+                return;
+            }
+            
+            // Converter para array e ordenar
+            todosRegistros = Object.entries(dados)
+                .map(([key, value]) => ({ key, ...value }))
+                .sort((a, b) => b.timestamp - a.timestamp);
+            
+            // Atualizar lista de itens únicos para sugestões
+            itensUnicos = new Set();
+            todosRegistros.forEach(reg => {
+                if (reg.item) itensUnicos.add(reg.item);
+            });
+            
+            // Atualizar lista de registros
+            atualizarListaRegistros();
+        });
+
+        // Sugestões de itens ao digitar
+        itemInput.addEventListener('input', function() {
+            const termo = this.value.toLowerCase();
+            suggestionsContainer.innerHTML = '';
+            
+            if (termo.length < 2) {
+                suggestionsContainer.style.display = 'none';
+                return;
+            }
+            
+            const sugestoesFiltradas = Array.from(itensUnicos)
+                .filter(item => item.toLowerCase().includes(termo))
+                .slice(0, 5);
+            
+            if (sugestoesFiltradas.length === 0) {
+                suggestionsContainer.style.display = 'none';
+                return;
+            }
+            
+            sugestoesFiltradas.forEach(item => {
+                const div = document.createElement('div');
+                div.textContent = item;
+                div.addEventListener('click', () => {
+                    itemInput.value = item;
+                    suggestionsContainer.style.display = 'none';
+                });
+                suggestionsContainer.appendChild(div);
+            });
+            
+            suggestionsContainer.style.display = 'block';
+        });
+
+        // Fechar sugestões ao clicar fora
+        document.addEventListener('click', function(e) {
+            if (e.target !== itemInput) {
+                suggestionsContainer.style.display = 'none';
+            }
+        });
+
+        // Permitir enviar com Enter
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                registrar();
+            }
         });
     </script>
 </body>
