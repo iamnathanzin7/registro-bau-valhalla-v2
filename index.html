@@ -480,6 +480,41 @@
                 grid-template-columns: 1fr;
             }
         }
+
+/* 🔥 ESTILO ATUALIZADO PARA O DROPDOWN DE NOMES */
+.input-group.custom-select {
+    position: relative;
+}
+
+.input-group.custom-select select {
+    width: 100%;
+    padding: 12px 15px 12px 40px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--gold);
+    color: white;
+    font-size: 1rem;
+    border-radius: 5px;
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+}
+
+.input-group.custom-select::after {
+    content: '\f078';
+    font-family: 'Font Awesome 6 Free';
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gold);
+    pointer-events: none;
+}
+
+/* Efeito quando aberto */
+.input-group.custom-select select:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.5);
+}
     </style>
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
