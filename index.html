@@ -16,13 +16,13 @@
         :root {
             --primary: #2d3436;
             --secondary: #3d4a4d;
-            --accent: #d4a762;
+            --accent: #4a89dc;
             --dark: #1e272e;
             --light: #f5f6fa;
             --success: #4CAF50;
             --warning: #F44336;
             --text: #2d3436;
-            --bg: #f1f2f6;
+            --bg: #e6f0f7;
         }
 
         body {
@@ -33,6 +33,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            background-image: linear-gradient(135deg, #e6f0f7 0%, #f5f9fc 100%);
         }
 
         /* Menu Principal */
@@ -52,6 +53,16 @@
             position: relative;
         }
 
+        .logo-img {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 15px;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBmaWxsPSIjNGE4OWRjIiBkPSJNMjU2IDhDMTE5IDggOCAxMTkgOCAyNTZzMTExIDI0OCAyNDggMjQ4IDI0OC0xMTEgMjQ4LTI0OFMzOTMgOCAyNTYgOHptMCA0NDhjLTExMC41IDAtMjAwLTg5LjUtMjAwLTIwMFMxNDUuNSA1NiAyNTYgNTZzMjAwIDg5LjUgMjAwIDIwMC04OS41IDIwMC0yMDAgMjAwem0xMDEuOC0yNjEuN2wtODQuOS02MS43Yy0zLjEtMi4yLTcuMi0yLjItMTAuMyAwbC04NC45IDYxLjdjLTQuMSAzLTUuMiA4LjctMi4yIDEyLjggMy4xIDQuMSA4LjcgNS4yIDEyLjggMi4ybDc2LjktNTUuOXYxNDYuNWMwIDQuNCAzLjYgOCA4IDhzOC0zLjYgOC04VjE1MS4xbDc2LjkgNTUuOWMyLjIgMS41IDQuOCAyLjIgNy40IDIuMiAyLjggMCA1LjUtMS4xIDcuNC0zLjEgMy00LjEgMS45LTkuOC0yLjItMTIuOHoiLz48L3N2Zz4=');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
         .logo-text {
             font-size: 2.8rem;
             font-weight: 700;
@@ -64,8 +75,9 @@
         .logo-subtext {
             font-size: 1.2rem;
             color: var(--accent);
-            letter-spacing: 10px;
+            letter-spacing: 5px;
             margin-bottom: 20px;
+            text-transform: uppercase;
         }
 
         .logo-divider {
@@ -240,7 +252,7 @@
         input:focus, select:focus {
             outline: none;
             border-color: var(--accent);
-            box-shadow: 0 0 0 2px rgba(212, 167, 98, 0.3);
+            box-shadow: 0 0 0 2px rgba(74, 137, 220, 0.3);
         }
 
         input::placeholder {
@@ -261,14 +273,14 @@
             justify-content: center;
             gap: 10px;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(212, 167, 98, 0.3);
+            box-shadow: 0 4px 15px rgba(74, 137, 220, 0.3);
             width: 100%;
         }
 
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(212, 167, 98, 0.4);
-            background: #c89550;
+            box-shadow: 0 6px 20px rgba(74, 137, 220, 0.4);
+            background: #3a76c4;
         }
 
         .btn:active {
@@ -376,12 +388,12 @@
         }
 
         .item-info span {
-            background: rgba(212, 167, 98, 0.1);
+            background: rgba(74, 137, 220, 0.1);
             padding: 4px 12px;
             border-radius: 20px;
             font-size: 0.9rem;
             color: var(--text);
-            border: 1px solid rgba(212, 167, 98, 0.2);
+            border: 1px solid rgba(74, 137, 220, 0.2);
         }
 
         .registro-time {
@@ -497,7 +509,12 @@
 
             .logo-subtext {
                 font-size: 1rem;
-                letter-spacing: 5px;
+                letter-spacing: 3px;
+            }
+
+            .logo-img {
+                width: 100px;
+                height: 100px;
             }
         }
     </style>
@@ -509,8 +526,9 @@
     <!-- Menu Principal -->
     <div class="menu-container" id="menuPrincipal">
         <div class="logo">
+            <div class="logo-img"></div>
             <div class="logo-text">VALHALLA</div>
-            <div class="logo-subtext">TEAM</div>
+            <div class="logo-subtext">CORPORATION</div>
             <div class="logo-divider"></div>
         </div>
         
