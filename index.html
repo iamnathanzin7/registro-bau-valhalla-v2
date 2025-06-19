@@ -248,7 +248,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 30px; /* Aumentei o espaçamento aqui */
             padding-bottom: 15px;
             border-bottom: 1px solid rgba(212, 180, 131, 0.2);
         }
@@ -428,6 +428,49 @@
             color: var(--light-sand);
         }
 
+        /* Nova Aba - Localizações */
+        .locations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .location-card {
+            background: rgba(10, 17, 40, 0.5);
+            border-radius: 8px;
+            overflow: hidden;
+            border-left: 4px solid var(--sand);
+            transition: all 0.3s ease;
+        }
+
+        .location-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .location-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 1px solid rgba(212, 180, 131, 0.2);
+        }
+
+        .location-info {
+            padding: 15px;
+        }
+
+        .location-title {
+            color: var(--sand);
+            font-family: 'Oswald', sans-serif;
+            margin-bottom: 10px;
+        }
+
+        .location-desc {
+            color: var(--light-sand);
+            font-size: 0.9rem;
+        }
+
         /* Mensagens vazias */
         .empty-message {
             text-align: center;
@@ -459,50 +502,6 @@
         .notificacao.error {
             background: var(--error);
         }
-
-        /* Responsivo */
-        @media (max-width: 768px) {
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .record-item {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
-            }
-            
-            .record-time {
-                text-align: left;
-                width: 100%;
-                padding-top: 10px;
-                border-top: 1px solid rgba(212, 180, 131, 0.2);
-            }
-            
-            .app-header {
-                padding: 20px 15px;
-            }
-            
-            .app-title {
-                font-size: 2rem;
-            }
-            
-            .filters {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .tab-button {
-                padding: 15px 10px;
-                font-size: 0.9rem;
-            }
-            
-            .tab-content {
-                padding: 20px 15px;
-            }
-        }
     </style>
 </head>
 <body>
@@ -518,6 +517,9 @@
             </button>
             <button class="tab-button" onclick="openTab('relatorios')">
                 <i class="fas fa-file-alt"></i> Relatórios
+            </button>
+            <button class="tab-button" onclick="openTab('localizacoes')">
+                <i class="fas fa-map-marked-alt"></i> Localizações
             </button>
         </div>
         
@@ -580,13 +582,24 @@
         
         <!-- Aba de Relatórios -->
         <div id="relatorios" class="tab-content">
-            <div class="input-group">
-                <i class="fas fa-user"></i>
-                <input type="text" id="autorRelatorio" placeholder="Seu nome" required>
-            </div>
-            
-            <div class="input-group">
-                <textarea id="conteudoRelatorio" placeholder="Digite seu relatório (ex: Lavei $1.200.000 para a facção...)" required></textarea>
+            <div class="form-grid">
+                <div class="input-group custom-select">
+                    <i class="fas fa-user"></i>
+                    <select id="autorRelatorio" required>
+                        <option value="" disabled selected>Selecione seu nome</option>
+                        <option value="ALBERTO">ALBERTO</option>
+                        <option value="JURANDIR">JURANDIR</option>
+                        <option value="JOSUÉ">JOSUÉ</option>
+                        <option value="DOMINIQUE">DOMINIQUE</option>
+                        <option value="COBY">COBY</option>
+                        <option value="OLLIVER">OLLIVER</option>
+                        <option value="ANTONY">ANTONY</option>
+                    </select>
+                </div>
+                
+                <div class="input-group">
+                    <textarea id="conteudoRelatorio" placeholder="Digite seu relatório (ex: Lavei $1.200.000 para a facção...)" required></textarea>
+                </div>
             </div>
             
             <button class="btn" onclick="enviarRelatorio()">
@@ -594,10 +607,30 @@
             </button>
             
             <div class="records-container" style="margin-top: 30px;">
-                <h3><i class="fas fa-file-alt"></i> Relatórios Recentes</h3>
+                <div class="records-header">
+                    <h3><i class="fas fa-file-alt"></i> Relatórios Recentes</h3>
+                </div>
                 
                 <div class="records-list" id="listaRelatorios">
                     <div class="empty-message">Nenhum relatório encontrado</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Nova Aba - Localizações -->
+        <div id="localizacoes" class="tab-content">
+            <div class="records-container">
+                <h3><i class="fas fa-map-marked-alt"></i> Pontos Importantes</h3>
+                <div class="locations-grid" id="listaLocalizacoes">
+                    <!-- Exemplo de card (você vai substituir pelos seus links do Imgur) -->
+                    <div class="location-card">
+                        <img src="https://i.imgur.com/SEUCODIGO.jpg" class="location-img" alt="Localização 1">
+                        <div class="location-info">
+                            <h4 class="location-title">Nome do Local</h4>
+                            <p class="location-desc">Descrição breve (opcional).</p>
+                        </div>
+                    </div>
+                    <!-- Adicione mais cards conforme necessário -->
                 </div>
             </div>
         </div>
@@ -608,7 +641,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
 
     <script>
-        // Configuração do Firebase (usando suas credenciais)
+        // Configuração do Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyAkYkBEAsN9NPU5ur7J4wtUzN0hesfA-tg",
             authDomain: "valhalla-corporation.firebaseapp.com",
@@ -713,7 +746,7 @@
                     mostrarNotificacao("Erro ao registrar!", true);
                 })
                 .finally(() => {
-                    btn.innerHTML = '<i class="fas fa-save"></i> Registrar Movimento';
+                    btn.innerHTML = '<i class="fas fa-save"></i> Registrar';
                     btn.disabled = false;
                 });
         }
@@ -792,7 +825,7 @@
 
         // Enviar relatório
         function enviarRelatorio() {
-            const autor = document.getElementById("autorRelatorio").value.trim();
+            const autor = document.getElementById("autorRelatorio").value;
             const conteudo = document.getElementById("conteudoRelatorio").value.trim();
             
             if (!autor || !conteudo) {
@@ -879,8 +912,7 @@
 
         // Carregar aba inicial
         document.addEventListener('DOMContentLoaded', () => {
-            carregarRegistros();
-            registrosCarregados = true;
+            openTab('bau');
         });
     </script>
 </body>
